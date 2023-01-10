@@ -6,7 +6,7 @@ ComponentSetValue2(dmgcomp,"wait_for_kill_flag_on_death",true)
 EntityAddComponent2(entity_id,
 "LuaComponent",
 {
-    script_damage_received  = "mods/noita-mp/files/scripts/mina-death/death-check.lua",
+    script_damage_received  = "mods/noita-mp/files/scripts/noita-components/mina-death/death-check.lua",
     execute_every_n_frame   = -1,
     execute_times           = -1,
 })
@@ -19,6 +19,24 @@ EntityAddComponent2(entity_id,
     name    = "NoitaMP_deathscript_deathdata",
     value_bool = false,
     value_int = 0,
+})
+
+EntityAddComponent2(entity_id,
+"LuaComponent",
+{
+    _enabled                = false,
+    script_source_file      = "mods/noita-mp/files/scripts/noita-components/mina-death/revive-check-nearby.lua",
+    execute_every_n_frame   = 30,
+    execute_times           = -1,
+})
+
+EntityAddComponent2(entity_id,
+"LuaComponent",
+{
+    _enabled                = false,
+    script_source_file      = "mods/noita-mp/files/scripts/noita-components/mina-death/revive-check-progress.lua",
+    execute_every_n_frame   = 10,
+    execute_times           = -1,
 })
 
 

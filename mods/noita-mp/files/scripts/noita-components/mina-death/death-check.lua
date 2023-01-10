@@ -5,13 +5,24 @@ function damage_received( damage, desc, entity_who_caused, is_fatal )
 
     if isdead ~= true then return end
 
-    local comps = EntityGetComponentIncludingDisabled(VariableStorageComponent)
-
+    --Set VSC data to say mina is dead and revive progress is 0
+    local comps = EntityGetComponentIncludingDisabled(entity_id, "VariableStorageComponent")
     for k=1, #comps
         do local v = comps[k];
             local compname = ComponentGetValue2(v,"name")
             if compname == "NoitaMP_deathscript_deathdata" then
                 ComponentSetValue2(v,"value_bool",true)
+                ComponentSetValue2(v,"value_int",0)
+            end
+        end
+    end
+    
+    local comps = EntityGetComponentIncludingDisabled(entity_id, "LuaComponent")
+    for k=1, #comps
+        do local v = comps[k];
+            local compname = ComponentGetValue2(v,"script_source_file")
+            if compname == "mods/noita-mp/files/scripts/noita-components/mina-death/revive-check-nearby.lua" then
+                EntitySetComponentIsEnabled(entity_id,v,true)
             end
         end
     end
@@ -19,22 +30,18 @@ end
 
 
 function check_death()
-    local cpc = CustomProfiler.start("death-check.check_death")
-
 	local comp = EntityGetFirstComponentIncludingDisabled( entity_id, "DamageModelComponent" )
     local isdead = false
 	if( comp ~= nil ) then
 		local hp = ComponentGetValueFloat( comp, "hp" )
-		local max_hp = ComponentGetValueFloat( comp, "max_hp" )
         local pos_x, pos_y = EntityGetTransform( entity_id )
 
 		-- check death
-		if ( hp <= 0.0 ) and (is_dead ~= true) then
+		if ( hp <= 0.0 ) and (isdead ~= true) then
 
 			isdead = true
 		end
 	end
-    CustomProfiler.stop("death-check.check_death", cpc)
     if isdead == true then
         return true
     else
