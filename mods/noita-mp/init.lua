@@ -115,6 +115,18 @@ function OnPlayerSpawned(player_entity)
                                 execute_every_n_frame = 1,
                             })
     end
+
+    if not GameHasFlagRun("minaDeath_script_applied") then
+        GameAddFlagRun("minaDeath_script_applied")
+        EntityAddComponent2(player_entity,
+                            "LuaComponent",
+                            {
+                                script_source_file    = "mods/noita-mp/files/scripts/mina-death/death-init.lua",
+                                execute_every_n_frame = 1,
+                                execute_times         = 1,
+                            })
+    end
+
     CustomProfiler.stop("init.OnPlayerSpawned", cpc)
 end
 
