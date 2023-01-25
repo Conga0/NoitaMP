@@ -28,7 +28,7 @@ function revivecheck_scan()
     if plyrfound == true then return true else return false end
 end
 
-if revivecheck_scan() == true then
+function revive()
     local comps = EntityGetComponentIncludingDisabled(entity_id, "LuaComponent")
     for k=1, #comps
         do local v = comps[k];
@@ -39,8 +39,37 @@ if revivecheck_scan() == true then
 
             local compname = ComponentGetValue2(v,"script_source_file")
             if compname == "mods/noita-mp/files/scripts/noita-components/mina-death/revive-check-progress.lua" then
-                EntitySetComponentIsEnabled(entity_id,v,true)
+                EntitySetComponentIsEnabled(entity_id,v,false)
             end
         end
+    end
+
+    local comps = EntityGetComponentIncludingDisabled(entity_id, "VariableStorageComponent")
+    for k=1, #comps
+        do local v = comps[k];
+            local compname = ComponentGetValue2(v,"name")
+            if compname == "NoitaMP_deathscript_deathdata" then
+                ComponentSetValue2(v,"value_bool",0)
+                ComponentSetValue2(v,"value_int",0)
+            end
+        end
+    end
+end
+
+if revivecheck_scan() == true then
+    local entity_id = EntityGetWithTag("player_unit")[1]
+    local comps = EntityGetComponentIncludingDisabled(entity_id, "VariableStorageComponent")
+    local progress = 0
+    for k=1, #comps
+        do local v = comps[k];
+            local compname = ComponentGetValue2(v,"name")
+            if compname == "NoitaMP_deathscript_deathdata" then
+                progress = ComponentGetValue2(v,"value_int")
+                ComponentSetValue2(v,"value_int",progress + 1)
+            end
+        end
+    end
+    if progress >= 30 then
+        revive()
     end
 end

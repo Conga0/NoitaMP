@@ -63,6 +63,7 @@ if ModSettingGet then
     require("Server")
     require("Client")
     require("CoroutineUtils")
+    require("MinaUtils")
 
     _G.whoAmI         = function()
         if _G.Server:amIServer() then

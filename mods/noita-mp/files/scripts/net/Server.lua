@@ -982,6 +982,17 @@ function Server.new(sockServer)
             CustomProfiler.stop("Server.update.tick", cpc1)
         end
 
+        --Networks Mina's death status & progress to other players
+        if MinaUtils.isKnockedOut then
+            local progress = MinaUtils.getReviveProgress()
+            if progress > 0 and not MinaUtils.isRevived then
+                self.sendReviveProgress(remoteMinaEntityId, progress)
+            end
+            if progress >= MinaUtils.reviveMaxProgress or MinaUtils.isRevived() then
+                self.sendRevived(remoteEntityId)
+            end
+        end
+
         sockServerUpdate(self)
         CustomProfiler.stop("Server.update", cpc016)
     end

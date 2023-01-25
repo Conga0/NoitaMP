@@ -877,6 +877,17 @@ function Client.new(sockClient)
             EntityUtils.syncDeadNuids()
         end
 
+        --Networks Mina's death status & progress to other players
+        if MinaUtils.isKnockedOut then
+            local progress = MinaUtils.getReviveProgress()
+            if progress > 0 and not MinaUtils.isRevived then
+                self.sendReviveProgress(remoteMinaEntityId, progress)
+            end
+            if progress >= MinaUtils.reviveMaxProgress or MinaUtils.isRevived() then
+                self.sendRevived(remoteEntityId)
+            end
+        end
+
         sockClientUpdate(self)
         CustomProfiler.stop("Client.update", cpc18)
     end

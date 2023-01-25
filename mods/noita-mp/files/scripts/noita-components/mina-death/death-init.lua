@@ -12,7 +12,7 @@ EntityAddComponent2(entity_id,
 })
 
 --bool keeps track of if mina is dead or not
---int keeps track of current revive progress, 0 = 0%, 120 = 100%, measured in frames.
+--int keeps track of current revive progress, 0 = 0%, 30 = 100%, measured in frames. add 1 to value every 10 frames until 20 is reached
 EntityAddComponent2(entity_id,
 "VariableStorageComponent",
 {

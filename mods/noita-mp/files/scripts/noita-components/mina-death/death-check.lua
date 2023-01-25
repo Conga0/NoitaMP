@@ -34,7 +34,6 @@ function check_death()
     local isdead = false
 	if( comp ~= nil ) then
 		local hp = ComponentGetValueFloat( comp, "hp" )
-        local pos_x, pos_y = EntityGetTransform( entity_id )
 
 		-- check death
 		if ( hp <= 0.0 ) and (isdead ~= true) then
