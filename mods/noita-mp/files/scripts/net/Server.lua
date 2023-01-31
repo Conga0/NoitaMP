@@ -983,8 +983,8 @@ function Server.new(sockServer)
         end
 
         --Networks Mina's death status & progress to other players
-        if MinaUtils.isKnockedOut then
-            local progress = MinaUtils.getReviveProgress()
+        if MinaUtils.isKnockedOut(nuid) then
+            local progress = MinaUtils.getReviveProgress(nuid)
             if progress > 0 and not MinaUtils.isRevived then
                 self.sendReviveProgress(remoteMinaEntityId, progress)
             end

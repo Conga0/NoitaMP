@@ -1,9 +1,9 @@
 
 function damage_received( damage, desc, entity_who_caused, is_fatal )
     local entity_id = GetUpdatedEntityID()
-    local isdead = check_death()
+    local mina_dead = check_death()
 
-    if isdead ~= true then return end
+    if mina_dead ~= true then return end
 
     --Set VSC data to say mina is dead and revive progress is 0
     local comps = EntityGetComponentIncludingDisabled(entity_id, "VariableStorageComponent")
@@ -29,7 +29,7 @@ function damage_received( damage, desc, entity_who_caused, is_fatal )
 end
 
 
-function check_death()
+function check_death(entity_id)
 	local comp = EntityGetFirstComponentIncludingDisabled( entity_id, "DamageModelComponent" )
     local isdead = false
 	if( comp ~= nil ) then

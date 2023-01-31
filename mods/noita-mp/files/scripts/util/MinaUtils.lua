@@ -18,9 +18,8 @@ MinaUtils.reviveMaxProgress = 20
 
 -- HERE you can add you function for fetching VSC values and sending stuff
 
-function isKnockedOut()
-    local entity_id = EntityGetWithTag("player_unit")[1]
-    local comps = EntityGetComponentIncludingDisabled(entity_id, "VariableStorageComponent")
+function MinaUtils.isKnockedOut(nuid)
+    local comps = EntityGetComponentIncludingDisabled(nuid, "VariableStorageComponent")
     for k=1, #comps
         do local v = comps[k];
             local compname = ComponentGetValue2(v,"name")
@@ -34,9 +33,8 @@ function isKnockedOut()
     end
 end
 
-function getReviveProgress()
-    local entity_id = EntityGetWithTag("player_unit")[1]
-    local comps = EntityGetComponentIncludingDisabled(entity_id, "VariableStorageComponent")
+function MinaUtils.getReviveProgress(nuid)
+    local comps = EntityGetComponentIncludingDisabled(nuid, "VariableStorageComponent")
     for k=1, #comps
         do local v = comps[k];
             local compname = ComponentGetValue2(v,"name")
